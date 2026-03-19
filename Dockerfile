@@ -9,4 +9,4 @@ COPY server.py .
 
 EXPOSE 8765
 
-CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8765"]
+CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8765", "--workers", "2"]
