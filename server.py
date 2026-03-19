@@ -5,7 +5,7 @@ from fastapi import Depends, FastAPI, Header, HTTPException, UploadFile
 from faster_whisper import WhisperModel
 
 app = FastAPI()
-model = WhisperModel('medium', device='cpu', compute_type='int8')
+model = WhisperModel('small', device='cpu', compute_type='int8')
 
 AUTH_TOKEN = os.environ['AUTH_TOKEN']
 
