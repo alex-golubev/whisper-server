@@ -1,0 +1,32 @@
+services:
+  whisper:
+    image: ghcr.io/alex-golubev/whisper-server:latest
+    env_file: .env
+    ports:
+      - "127.0.0.1:8765:8765"
+    volumes:
+      - whisper-cache:/root/.cache
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+
+  caddy:
+    image: caddy:2-alpine
+    command: caddy reverse-proxy --from ${DOMAIN} --to whisper:8765
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+    env_file: .env
+    restart: unless-stopped
+    depends_on:
+      - whisper
+
+volumes:
+  whisper-cache:
+  caddy-data:
+  caddy-config:
